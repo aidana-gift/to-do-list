@@ -1,0 +1,17 @@
+.btn {
+    background: none;
+    border: 0px;
+    color: #888;
+    font-size: 15px;
+    font-family: sans-serif;
+    cursor: pointer;
+    margin: 8px auto;
+}
+.done{
+    text-decoration: line-through;
+}
+.todoList-item {
+    border: solid;
+    border-color: rgba(0, 238, 255, 0.459);
+    padding: 5px;
+}
