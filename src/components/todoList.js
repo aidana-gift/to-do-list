@@ -3,11 +3,11 @@ import ToDoListItem from './todoListItem'
 
 const ToDoList = ({ todos, onDeleted }) => {
     const elements = todos.map((item) => {
-        const { id, ...itemProps } = item;
+        const { id,  title} = item;
         return (
             <li key = {id}>
+               {title} 
                 <ToDoListItem
-                    { ...itemProps }
                     onDeleted ={ () => onDeleted(id)}  />
             </li>
         );

@@ -1,41 +1,73 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import ReactDom from 'react-dom'
 import AppHeader from './components/appHeader'
 import ToDoList from './components/todoList'
-import axios from 'axios'
 
-export default class App extends Component {
-    state = {
-        todoData: [
-            {label: 'Sleeeep', important: false, id: 1},
-            {label: 'finish an app', important: true, id: 2},
-            {label: 'do hw', important: true, id: 3},
-        ]
-    };
+class App extends Component {
 
-    deleteItem = (id) => {
-    this.setState (({todoData}) => {
-            const idx = todoData.findIndex((el) => el.id === id);
+  constructor(props) {
+    super();
+    this.state = {
+      items: [],
+      isLoaded: false
+    }
+  }
+
+  componentDidMount() {
+
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          isLoaded: true,
+          items: json
+        })
+      })
+  }
+
+  deleteItem = (id) => {
+    this.setState (({items}) => {
+            const idx = items.findIndex((el) => el.id === id);
             
-            const before = todoData.slice(0, idx);
-            const after = todoData.slice(idx + 1);
+            const before = items.slice(0, idx);
+            const after = items.slice(idx + 1);
             const newArray = [...before, ...after];
             return {
-                todoData: newArray
+                items: newArray
             }
         })
     };
 
+  render() {
+    let { isLoaded, items } = this.state;
 
-    render(){
-        return (<div>
-            <AppHeader toDo = {1} done = {3}/>
+    if (!isLoaded) {
+      return <div>Loading . . .</div>
+    } else {
+
+      
+        return (
+          <div>
+              <AppHeader />
+{/* 
+              <ul>
+              {items.map(item => (
+                <li key={item.id}>
+                  {item.title}
+                </li>
+              ))}
+              
+            </ul> */}
             <ToDoList 
-            todos = {this.state.todoData}
+            todos = {items}
             onDeleted = { this.deleteItem}/>
-        </div>);
+            
+          </div>
+        );
+      
     }
-
+  }
 };
 
+export default App;
 ReactDom.render(<App />, document.getElementById('root'));
