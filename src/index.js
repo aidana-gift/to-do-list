@@ -49,15 +49,6 @@ class App extends Component {
         return (
           <div>
               <AppHeader />
-{/* 
-              <ul>
-              {items.map(item => (
-                <li key={item.id}>
-                  {item.title}
-                </li>
-              ))}
-              
-            </ul> */}
             <ToDoList 
             todos = {items}
             onDeleted = { this.deleteItem}/>
